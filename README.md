@@ -2,4 +2,4 @@
 My Arch Linux Installation Script.
 
 
-__Not quite there yet: This script is like a broken pencil, it's pointless.__
+__This script can be used to do a base install of Arch Linux__
