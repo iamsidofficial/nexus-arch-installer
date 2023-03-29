@@ -41,9 +41,11 @@ if [ $choice == 'y' ]; then
   mkfs.ext4 $home
 fi
 
-# Mount the root partition
-echo "Mounting / partition on /mnt..."
+# Mount the partitions
+echo "Mounting partitions..."
 mount $root /mnt
+mount $home /mnt/home --mkdir
+mount $efi /mnt/boot/efi --mkdir
 
 # Connect to wifi
 echo "Connecting to wifi..."
@@ -133,15 +135,6 @@ arch-chroot usermod -aG wheel,audio,video,storage,libvirt $username
 echo "Almost done! Enabling sudo access for $username"
 arch-chroot pacman -S sudo
 arch-chroot sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' 
-
-# Set environment variables to use Wayland (because it's cool)
-echo "Now for some cool Wayland stuff..."
-arch-chroot echo "QT_QPA_PLATFORM=wayland" >> /etc/environment
-echo "QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/environment
-echo "MOZ_ENABLE_WAYLAND=1" >> /etc/environment
-echo "MOZ_WEBRENDER=1" >> /etc/environment
-echo "XDG_SESSION_TYPE=wayland" >> /etc/environment
-echo "XDG_CURRENT_DESKTOP=sway" >> /etc/environment
 
 # Notify user that installation is complete
 echo "All done! Type 'umount -a' and reboot to enjoy your new Arch Linux installation!"
